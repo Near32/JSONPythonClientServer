@@ -17,7 +17,7 @@ class jsonSocket(object) :
 		self._timeout = None
 		self._address = address
 		self._port = port
-
+		
 	def sendObj(self, obj) :
 		msg = json.dumps(obj)
 		if self.socket :
@@ -94,6 +94,7 @@ class jsonSocket(object) :
 class JSONServer(jsonSocket) :
 	def __init__(self, address='127.0.0.1', port=5489) :
 		super(JSONServer, self).__init__(address,port)
+		self.nbrClient = 0
 		try :
 			self._bind()
 		except Exception as e :
@@ -117,6 +118,10 @@ class JSONServer(jsonSocket) :
 		self.conn.settimeout( self.timeout) 
 		
 		logger.debug("connection accepted, conn socket ( {}, {})".format(addr[0], addr[1]) )
+		self.nbrClient += 1
+
+	def isThereAnyClient(self) :
+		return True if self.nbrClient > 0 else False
 
 	def _is_connected(self) :
 		return True if not self.conn else False

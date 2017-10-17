@@ -45,6 +45,7 @@ class ThreadedServerSender( threading.Thread, jsonSocket.JSONServer) :
 		jsonSocket.JSONServer.__init__(self)
 		self._isAlive = False
 		self.listMessage = []
+		self._timeout = 2.0
 
 	def sendMessage(self, obj) :
 		self.listMessage.append(obj)
